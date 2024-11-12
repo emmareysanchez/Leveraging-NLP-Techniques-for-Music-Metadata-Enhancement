@@ -1,2 +1,7 @@
 .venv/
 .venv/
+fma_medium/
+fma-free-music-archive-small-medium.zip
+.DS_Store
+modelo_tfg_existente/data/.DS_Store
+modelo_tfg_existente/data/genres_original/.DS_Store
