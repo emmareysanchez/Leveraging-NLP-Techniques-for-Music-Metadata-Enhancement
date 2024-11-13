@@ -1,0 +1,266 @@
+Electronic: 35701
+Experimental: 25493 
+Avant-Garde: 9183 
+Pop: 8570 
+Rock: 8406 
+Experimental Pop: 7330 
+Folk/Acoustic: 7320 
+Noise: 7285 
+Hip-Hop/Rap: 6612 
+Electroacoustic: 6133 
+Instrumental: 6124 
+Lo-Fi: 6075 
+Indie-Rock: 5756
+Ambient Electronic: 5747 
+Soundtrack: 5665
+Punk: 5546
+Singer-Songwriter: 4318 
+Improv: 4306
+IDM: 3484
+Garage: 3406 
+Classical: 3393 
+Field Recordings: 3247
+Musique Concrete: 2965
+Glitch: 2825
+Psych-Rock: 2642 
+Drone: 2574
+Jazz: 2526 
+R&B/Soul: 2521 
+Psych-Folk: 2300
+Sound Collage: 2282 
+Industrial: 2246 
+Downtempo: 2097
+Post-Punk: 1930 
+Noise-Rock: 1893 
+International: 1855 
+Trip-Hop: 1811 
+Chip Music: 1675
+Free-Jazz: 1542
+Unclassifiable: 1537 
+Post-Rock: 1512
+Sound Art: 1467
+Dance: 1445 
+Minimalism: 1402
+Hardcore: 1338 
+Freak-Folk: 1315 
+Chiptune: 1232
+Hip-Hop Beats: 1220 
+Audio Collage: 1170 
+Americana: 1068 
+Country: 1065 
+Sound Poetry: 1045
+Power-Pop: 1032 
+Minimal Electronic: 1024
+Metal: 973 
+Reggae - Dub: 873
+Old-Time / Historic: 869 
+Progressive: 834 
+Chill-out: 829 
+Shoegaze: 787 
+Free-Folk: 755 
+Alternative Hip-Hop: 742 
+Breakbeat: 735
+Krautrock: 734 
+Composed Music: 635
+Balkan: 616 
+No Wave: 612 
+Electro-Punk: 568 
+Loud-Rock: 566 
+Soul-RnB: 555 
+New Wave: 522 
+Breakcore - Hard: 511
+Latin America: 510 
+Drum & Bass: 500 
+Space-Rock: 497 
+Goth: 497 
+Spoken Weird: 490
+Europe: 478 
+Novelty: 443 
+Lounge: 442 
+French: 399 
+Disco: 377 
+New Age: 362 
+Compilation: 339
+Grindcore: 314 
+World/International: 313 
+Poetry: 301 
+Jazz: Out: 299 
+Spoken: 297 
+20th Century Classical: 297 
+Surf: 275 
+Jungle: 258 
+Sludge: 253 
+Holiday: 250 
+Brazilian: 238 
+Comedy: 234 
+African: 232 
+Choral Music: 216 
+Radio Art: 211 
+Kid-Friendly: 202
+Abstract Hip-Hop: 202 
+Indian: 198 
+Death-Metal: 197 
+Bigbeat: 191
+Easy Listening: 177
+Spoken Word: 177 
+Thrash: 176 
+Chamber Music: 170 
+Radio: 167 
+British Folk: 164 
+Opera: 162 
+Middle East: 157 
+Black-Metal: 152 
+Interview: 138 
+Rockabilly: 130 
+Asia-Far East: 122 
+Nu-Jazz: 120 
+Spanish: 117 
+Rock Opera: 116 
+Romany (Gypsy): 112 
+Modern Jazz: 107 
+Big Band/Swing: 105 
+Jazz: Vocal: 99 
+Reggae - Dancehall: 97 
+Nerdcore: 85 
+Skweee: 83 
+Country & Western: 75
+Radio Theater: 73 
+Christmas: 72 
+Cumbia: 68 
+Gospel: 66 
+Turkish: 65 
+Polka: 62 
+Klezmer: 57 
+Wonky: 56
+Flamenco: 47 
+Easy Listening: Vocal: 47 
+North African: 40
+Sound Effects: 36
+hiphop: 34 
+Tango: 30 
+Talk Radio: 27
+Fado: 26 
+Pacific: 23
+Musical Theater: 18 
+South Indian Traditional: 17 
+Salsa: 12 
+Banter: 9 
+Western Swing: 4 
+N. Indian Traditional: 4 
+Deep Funk: 1
+
+—> Usar attention para que hallar qué géneros se parecen más entre sí
+
+
+ROCK:
+Rock: 8406
+Indie-Rock: 5756
+Psych-Rock: 2642
+Noise-Rock: 1893
+Post-Rock: 1512
+Krautrock: 734
+Space-Rock: 497
+
+
+POP
+Pop: 8570
+Experimental Pop: 7330
+Power-Pop: 1032
+
+
+METAL
+Metal: 973
+Death-Metal: 197
+Black-Metal: 152
+
+
+FOLK 
+Folk/Acoustic: 7320
+Psych-Folk: 2300
+Freak-Folk: 1315
+Free-Folk: 755
+British Folk: 164
+
+
+JAZZ
+Jazz: 2526
+Free-Jazz: 1542
+Nu-Jazz: 120
+Modern Jazz: 107
+Jazz: Out: 299
+Jazz: Vocal: 99
+
+
+PUNK
+Punk: 5546
+Post-Punk: 1930
+Electro-Punk: 568
+
+
+HIP-HOP/RAP
+Hip-Hop/Rap: 6612
+Hip-Hop Beats: 1220
+Alternative Hip-Hop: 742
+Abstract Hip-Hop: 202
+
+
+ELECTRONIC:
+Electronic: 35701
+Electroacoustic: 6133
+Lo-Fi: 6075
+Ambient Electronic: 5747
+IDM: 3484
+Glitch: 2825
+Downtempo: 2097
+Minimal Electronic: 1024
+Breakbeat: 735
+Breakcore - Hard: 511
+Drum & Bass: 500
+Bigbeat: 191
+
+
+R&B / SOUL:
+R&B/Soul: 2,521
+Soul-RnB: 555
+
+
+CLASSICAL MUCI:
+Classical: 3,393
+20th Century Classical: 297
+Chamber Music: 170
+Opera: 162
+Choral Music: 216
+Composed Music: 635
+Minimalism: 1,402
+
+
+COUNTRY / AMERICANA:
+Country: 1,065
+Americana: 1,068
+Country & Western: 75
+Western Swing: 4
+
+
+WORLD MUSIC:
+International: 1,855
+World/International: 313
+Latin America: 510
+Brazilian: 238
+African: 232
+Balkan: 616
+Middle East: 157
+Indian: 198
+N. Indian Traditional: 4
+South Indian Traditional: 17
+Turkish: 65
+Romany (Gypsy): 112
+Klezmer: 57
+North African: 40
+Pacific: 23
+Asia-Far East: 122
+Spanish: 117
+Flamenco: 47
+Fado: 26
+Tango: 30
+Cumbia: 68
+Salsa: 12

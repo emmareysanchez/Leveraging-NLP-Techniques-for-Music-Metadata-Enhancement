@@ -9,11 +9,13 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import shutil
+import audioread
+import soundfile
 
 
 # Ruta al archivo raw_tracks.csv
-metadata_path = "./fma_medium/fma_metadata/raw_tracks.csv"
-data_dir = "./fma_medium/fma_medium"  # Directorio donde están los archivos .mp3 organizados en subcarpetas numeradas
+metadata_path = "fma_medium/fma_metadata/raw_tracks.csv"
+data_dir = "fma_medium/fma_medium/fma_medium"  # Directorio donde están los archivos .mp3 organizados en subcarpetas numeradas
 output_dir = "./output_dir"
 os.makedirs(output_dir, exist_ok=True)
 
@@ -72,59 +74,66 @@ genre_mapping = {
 
 # Función para mapear el género a su categoría agrupada
 def map_genre(genre):
-    return genre_mapping.get(genre)
+    return genre_mapping.get(genre) 
 
 # Leer el archivo de metadatos y filtrar las pistas de los géneros seleccionados
-tracks = pd.read_csv(metadata_path)
-selected_tracks = {}
+tracks = pd.read_csv(metadata_path, delimiter=';', low_memory=False) # low_memory=False para evitar advertencias
 
-for _, row in tracks.iterrows():
-    try:
-        genres = ast.literal_eval(row['track_genres'])
-        for genre in genres:
-            genre_name = map_genre(genre['genre_title'])
-            if genre_name:  # Solo incluir géneros seleccionados
-                track_id = row['track_id']
-                selected_tracks[track_id] = genre_name
-                break  # Solo el primer género que coincide
-    except (ValueError, KeyError):
-        continue
+selected_tracks = {} # Diccionario para almacenar los track_id y su género correspondiente
+
+for index, row in tracks.iterrows(): # Iterar sobre las filas del DataFrame
+    genres = row['track_genres'] # Obtener la columna 'track_genres' de la fila actual
+    if isinstance(genres, str) and genres.startswith('['):  # Solo procesa si es una cadena que parece una lista
+        try:
+            genres = ast.literal_eval(genres) # Convertir la cadena a una lista de diccionarios
+            if isinstance(genres, list):  # Solo procede si genres es una lista
+                for genre in genres:
+                    genre_name = map_genre(genre['genre_title']) # Mapear el género a su categoría
+                    if genre_name:
+                        track_id = row['track_id'] # Obtener el track_id de la fila actual
+                        selected_tracks[track_id] = genre_name # Almacenar el track_id y el género en el diccionario
+                        break
+        except (ValueError, SyntaxError, KeyError, TypeError) as e:
+            print(f"Error al procesar 'track_genres' en fila {index}: {genres}. Error: {e}")
 
 # Contador para el progreso
 total_tracks = len(selected_tracks)
 processed_count = 0
 
-
 # Generar espectrogramas de Mel para los archivos de los géneros seleccionados
 for track_id, genre in selected_tracks.items():
     # Formatear el track_id para encontrar el archivo en la estructura de carpetas
-    track_id_str = f"{track_id:06d}"  # Convertir a un string con ceros iniciales (ej. 000123)
+    track_id_str = f"{int(track_id):06d}"  # Convertir a un string con ceros iniciales (ej. 000123)
     folder = track_id_str[:3]  # Carpeta está determinada por los primeros tres dígitos (ej. 000, 001, ...)
-    file_path = os.path.join(data_dir, folder, f"{track_id_str}.mp3")
+    file_path = os.path.join(data_dir, folder, f"{track_id_str}.mp3") # Ruta al archivo .mp3
     
     if os.path.exists(file_path):  # Asegurarse de que el archivo exista
-        output_genre_dir = os.path.join(output_dir, genre)
+        output_genre_dir = os.path.join(output_dir, genre) 
         os.makedirs(output_genre_dir, exist_ok=True)
         
-        # Cargar el archivo de audio y generar el espectrograma
-        y, sr = librosa.load(file_path, sr=22050)
-        S = librosa.feature.melspectrogram(y=y, sr=sr)
-        S_dB = librosa.power_to_db(S, ref=np.max)
+        try:
+            # Cargar el archivo de audio y generar el espectrograma
+            y, sr = librosa.load(file_path, sr=22050) 
+            S = librosa.feature.melspectrogram(y=y, sr=sr) 
+            S_dB = librosa.power_to_db(S, ref=np.max)
+            
+            # Guardar el espectrograma como imagen
+            plt.figure(figsize=(10, 4))
+            librosa.display.specshow(S_dB, sr=sr, x_axis='time', y_axis='mel')
+            plt.colorbar(format='%+2.0f dB')
+            plt.title(f'Mel Spectrogram - {genre}')
+            plt.tight_layout()
+            
+            output_path = os.path.join(output_genre_dir, f"{track_id_str}.png")
+            plt.savefig(output_path, bbox_inches='tight', pad_inches=0)
+            plt.close()
+            processed_count += 1
+            if processed_count % 100 == 0 or processed_count == total_tracks:
+                print(f"Processed {processed_count}/{total_tracks} tracks ({(processed_count/total_tracks)*100:.2f}%)")
         
-        # Guardar el espectrograma como imagen
-        plt.figure(figsize=(10, 4))
-        librosa.display.specshow(S_dB, sr=sr, x_axis='time', y_axis='mel')
-        plt.colorbar(format='%+2.0f dB')
-        plt.title(f'Mel Spectrogram - {genre}')
-        plt.tight_layout()
-        
-        # Nombre del archivo de salida
-        output_path = os.path.join(output_genre_dir, f"{track_id_str}.png")
-        plt.savefig(output_path, bbox_inches='tight', pad_inches=0)
-        plt.close()
-        processed_count += 1
-        if processed_count % 100 == 0 or processed_count == total_tracks:
-            print(f"Processed {processed_count}/{total_tracks} tracks ({(processed_count/total_tracks)*100:.2f}%)")
+        except (FileNotFoundError, audioread.exceptions.NoBackendError, soundfile.LibsndfileError) as e:
+            print(f"Error al procesar {file_path}: {e}")
+            continue  # Saltar este archivo y continuar con el siguiente
 
 
 # Crear directorios de salida para train, val, y test dentro de output_dir
