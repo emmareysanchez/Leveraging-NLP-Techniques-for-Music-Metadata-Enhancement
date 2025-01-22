@@ -169,3 +169,4 @@ print(f'Test Accuracy: {test_accuracy * 100:.2f}%')
 # Guardar el modelo
 torch.save(model.state_dict(), "model_fma.pt")
 print("Modelo guardado como 'model_fma.pt'")
+
