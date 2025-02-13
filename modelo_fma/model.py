@@ -66,11 +66,11 @@ class MusicGenreDataset(Dataset):
         return image, label
 
 # Carga de datos
-train_dataset = MusicGenreDataset(data_dir='./output_dir/train', transform=transform)
-val_dataset = MusicGenreDataset(data_dir='./output_dir/val', transform=transform)
-test_dataset = MusicGenreDataset(data_dir='./output_dir/test', transform=transform)
+train_dataset = MusicGenreDataset(data_dir='modelo_fma/output_dir/train', transform=transform)
+val_dataset = MusicGenreDataset(data_dir='modelo_fma/output_dir/val', transform=transform)
+test_dataset = MusicGenreDataset(data_dir='modelo_fma/output_dir/test', transform=transform)
 
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
 val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 

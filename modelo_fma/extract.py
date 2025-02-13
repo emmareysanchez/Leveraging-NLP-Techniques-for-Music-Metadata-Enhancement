@@ -11,12 +11,13 @@ import pandas as pd
 import shutil
 import audioread
 import soundfile
+import json
 
 
 # Ruta al archivo raw_tracks.csv
-metadata_path = "../fma_medium/fma_metadata/raw_tracks.csv"
-data_dir = "../fma_medium/fma_medium/fma_medium"  # Directorio donde están los archivos .mp3 organizados en subcarpetas numeradas
-output_dir = "./output_dir"
+metadata_path = "fma_medium/fma_metadata/raw_tracks.csv"
+data_dir = "fma_medium/fma_medium/fma_medium"  # Directorio donde están los archivos .mp3 organizados en subcarpetas numeradas
+output_dir = "modelo_fma/output_dir"
 os.makedirs(output_dir, exist_ok=True)
 
 ###### LECTURA DE DATOS Y AGRUPACIÓN DE GÉNEROS ######
@@ -47,6 +48,7 @@ genre_mapping = {
     # HIP-HOP/RAP
     "Hip-Hop/Rap": "Hip-Hop/Rap", "Hip-Hop Beats": "Hip-Hop/Rap", 
     "Alternative Hip-Hop": "Hip-Hop/Rap", "Abstract Hip-Hop": "Hip-Hop/Rap",
+    "Rap": "Hip-Hop/Rap", "Hip-Hop": "Hip-Hop/Rap",
     
     # ELECTRONIC
     "Electronic": "Electronic", "Electroacoustic": "Electronic", "Lo-Fi": "Electronic", 
@@ -80,25 +82,31 @@ def map_genre(genre):
 
 # Leer el archivo de metadatos y filtrar las pistas de los géneros seleccionados
 tracks = pd.read_csv(metadata_path, delimiter=';', low_memory=False) # low_memory=False para evitar advertencias
-
 selected_tracks = {} # Diccionario para almacenar los track_id y su género correspondiente
-
 for index, row in tracks.iterrows(): # Iterar sobre las filas del DataFrame
     genres = row['track_genres'] # Obtener la columna 'track_genres' de la fila actual
     if isinstance(genres, str) and genres.startswith('['):  # Solo procesa si es una cadena que parece una lista
         try:
-            genre = ast.literal_eval(genres) # Convertir la cadena a diccionario
-            if isinstance(genre, dict):  # Asegurarse de que es un diccionario
-                genre_name = map_genre(genre['genre_title'])  # Obtener el título del género y mapearlo a su categoría
+            genre_list = json.loads(genres.replace("'", '"')) # Convertir la cadena a diccionario (lista de géneros)
+            if isinstance(genre_list, list) and len(genre_list) > 0:  # Asegurarse de que es una lista y contiene al menos un elemento
+                genre_title = genre_list[0]['genre_title']
+                genre_name = map_genre(genre_title)  # Obtener el título del género y mapearlo a su categoría
                 if genre_name:
                     track_id = row['track_id'] # Obtener el track_id de la fila actual
-                    selected_tracks[track_id] = genre_name # Almacenar el track_id y el género en el diccionario
-                    break
+                    # Verificar que el archivo exista en el subset FMA small
+                    track_id_str = f"{int(track_id):06d}"  # Convertir a un string con ceros iniciales (ej. 000123)
+                    folder = track_id_str[:3]  # Carpeta está determinada por los primeros tres dígitos (ej. 000, 001, ...)
+                    file_path = os.path.join(data_dir, folder, f"{track_id_str}.mp3") # Ruta al archivo .mp3
+                    if os.path.exists(file_path):
+                        selected_tracks[track_id] = genre_name # Almacenar el track_id y el género en el diccionario
         except (ValueError, SyntaxError, KeyError, TypeError) as e:
             print(f"Error al procesar 'track_genres' en fila {index}: {genres}. Error: {e}")
 
+print(f"Total de pistas seleccionadas: {len(selected_tracks)}")
+print(selected_tracks)
 
 ###### GENERACIÓN DE ESPECTROGRAMAS ######
+
 
 # Contador para el progreso
 total_tracks = len(selected_tracks)
@@ -155,7 +163,7 @@ for genre in genre_mapping.values():
     os.makedirs(os.path.join(test_dir, genre), exist_ok=True)
 
 # Dividir los archivos en train, val y test para cada género
-for genre in genre_mapping.values():
+for genre in set(genre_mapping.values()):
     genre_path = os.path.join(output_dir, genre)
     if os.path.exists(genre_path):
         files = os.listdir(genre_path)
