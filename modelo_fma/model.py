@@ -70,7 +70,7 @@ train_dataset = MusicGenreDataset(data_dir='modelo_fma/output_dir/train', transf
 val_dataset = MusicGenreDataset(data_dir='modelo_fma/output_dir/val', transform=transform)
 test_dataset = MusicGenreDataset(data_dir='modelo_fma/output_dir/test', transform=transform)
 
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 

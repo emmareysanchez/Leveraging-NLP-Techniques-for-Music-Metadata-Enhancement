@@ -7,3 +7,6 @@ modelo_tfg_existente/data/.DS_Store
 modelo_tfg_existente/data/genres_original/.DS_Store
 output_dir/
 fma_small/
+fma_medium_git/
+fma_metadata/
+fmamodel_git/gitenv/

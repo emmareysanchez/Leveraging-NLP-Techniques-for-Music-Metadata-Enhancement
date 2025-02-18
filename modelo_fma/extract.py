@@ -15,8 +15,8 @@ import json
 
 
 # Ruta al archivo raw_tracks.csv
-metadata_path = "fma_medium/fma_metadata/raw_tracks.csv"
-data_dir = "fma_medium/fma_medium/fma_medium"  # Directorio donde están los archivos .mp3 organizados en subcarpetas numeradas
+metadata_path = "fma_metadata/raw_tracks.csv"
+data_dir = "fma_medium_git"  # Directorio donde están los archivos .mp3 organizados en subcarpetas numeradas
 output_dir = "modelo_fma/output_dir"
 os.makedirs(output_dir, exist_ok=True)
 
@@ -81,7 +81,7 @@ def map_genre(genre):
     return genre_mapping.get(genre) # Devuelve el valor del key en el diccionario genere_mapping, si no existe devuelve None
 
 # Leer el archivo de metadatos y filtrar las pistas de los géneros seleccionados
-tracks = pd.read_csv(metadata_path, delimiter=';', low_memory=False) # low_memory=False para evitar advertencias
+tracks = pd.read_csv(metadata_path, delimiter=',', low_memory=False) # low_memory=False para evitar advertencias
 selected_tracks = {} # Diccionario para almacenar los track_id y su género correspondiente
 for index, row in tracks.iterrows(): # Iterar sobre las filas del DataFrame
     genres = row['track_genres'] # Obtener la columna 'track_genres' de la fila actual
@@ -93,7 +93,7 @@ for index, row in tracks.iterrows(): # Iterar sobre las filas del DataFrame
                 genre_name = map_genre(genre_title)  # Obtener el título del género y mapearlo a su categoría
                 if genre_name:
                     track_id = row['track_id'] # Obtener el track_id de la fila actual
-                    # Verificar que el archivo exista en el subset FMA small
+                    # Verificar que el archivo exista en el subset FMA small / FMA medium
                     track_id_str = f"{int(track_id):06d}"  # Convertir a un string con ceros iniciales (ej. 000123)
                     folder = track_id_str[:3]  # Carpeta está determinada por los primeros tres dígitos (ej. 000, 001, ...)
                     file_path = os.path.join(data_dir, folder, f"{track_id_str}.mp3") # Ruta al archivo .mp3
