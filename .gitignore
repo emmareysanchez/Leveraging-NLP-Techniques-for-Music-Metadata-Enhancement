@@ -1,0 +1,19 @@
+# Checkpoints de modelos
+modelo_fma_small/models/
+*.pt
+*.pth
+
+# Datos intermedios / espectrogramas
+modelo_fma_small/output_dir_*
+*.zip
+
+# Entornos, cachés y metadatos
+.venv/
+__pycache__/
+*.log
+.DS_Store
+
+fma_medium/
+fma_medium_git/
+fma_metadata/
+fma_small/
